@@ -11,11 +11,6 @@ class App extends React.Component {
   }
 
   fetchData() {
-    // Only need to fetch if there is no data already
-    if(this.state.beers.length > 0) {
-      return;
-    }
-
     fetch("https://api.punkapi.com/v2/beers")
     .then(response => response.json())
     .then(json => this.setState({
@@ -33,9 +28,11 @@ class App extends React.Component {
     });
   }
 
-  render() {
+  componentDidMount() {
     this.fetchData();
+  }
 
+  render() {
     const beerDom = this.state.beers.map((val, i) => {
       return (
         <Beer id={val.id} key={val.id} name={val.name} image={val.image_url} like={val.like} 
